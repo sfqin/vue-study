@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charse="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<div id="app"></div>
+	<script type="text/javascript" src="vue.js"></script>
+
+	<script type="text/javascript">
+		new Vue({
+			el:'#app',
+			template:`
+				<div>
+					<div>watch监听简单数据</div>
+					<input type="text" name="" v-model='msg'><br>
+					<div>watch监听复杂数据</div>
+					<input type="text" name="" v-model='per.text'><br>
+					<input type="text" name="" v-model='n1'>+
+					<input type="text" name="" v-model='n2'>*
+					<input type="text" name="" v-model='n3'>={{res}}
+				</div>
+			`,
+			data:function(){
+				return {
+					msg:'',
+					per:{text:''},
+					n1:'',
+					n2:'',
+					n3:1,
+				}
+			},
+			watch:{
+				msg(newval,oldval){
+					if(newval == 'love'){
+						alert(newval)
+					}
+				},
+				per:{
+					handler(newval,oldval){
+						if(newval.text == 'love'){
+							alert(newval.text)
+						}
+					},
+					deep:true
+				}
+			},
+			computed:{
+				res(){
+					return (Number(this.n1)+Number(this.n2)*Number(this.n3))
+				}
+			}
+		})
+	</script>
+</body>
+</html>

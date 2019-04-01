@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charse="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<div id="app"></div>
+	<script type="text/javascript" src="vue.js"></script>
+
+	<script type="text/javascript">
+		var Child={
+			template:`
+				<div>我是子组件</div>
+			`,
+			data(){
+				return{
+					msg:'hello'
+				}
+			},
+			created(){
+				console.log(this.$parent)
+			}
+		}
+
+		var Parent={
+				template:`
+				<div>
+					我是父组件
+					<slot></slot>
+					<slot name='hello'></slot>
+					<child ref='childs'></child>
+				</div>
+			`,
+			components:{
+				Child
+			},
+			mounted(){
+				console.log(this.$refs.childs)
+			}
+		}
+
+
+		new Vue({
+			el:'#app',
+			components:{
+				Parent,
+			},
+			template:`
+				<div>
+					<parent>
+						<div>我是插槽</div>
+						<div slot='hello'>我是插槽2</div>
+					</parent>
+				</div>
+			`,
+			data:function(){
+				return {
+
+				}
+			}
+		})
+	</script>
+</body>
+</html>

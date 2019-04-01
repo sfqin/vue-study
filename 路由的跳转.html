@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charse="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<div id="app"></div>
+	<script type="text/javascript" src="vue.js"></script>
+	<!-- 1.引入路由插件 -->
+	<script type="text/javascript" src="vue-router.js"></script>
+	<script type="text/javascript">
+		var Login={
+			template:`
+				<div>我是登录页面</div>
+			`
+		}
+		var Register={
+			template:`
+				<div>我是注册页面</div>
+			`
+		}
+
+		// 2. 安装路由插件
+		Vue.use(VueRouter);
+		// 3. 创建路由对象
+		var router = new VueRouter({
+			// 4. 配置路由规则
+			routes:[
+				{path:'/login',name:'login',component:Login},
+				{path:'/register',name:'register',component:Register},
+			]
+		})
+		new Vue({
+			el:'#app',
+			router,
+			template:`
+				<div>
+					<!-- 5. 留坑给路由 -->
+					<router-link to='/login'>去登陆link</router-link>
+					<router-link to='/register'>去注册link</router-link>
+					<div>
+						<button @click='goregister'>我要去注册使用push</button>
+						<button @click='gologin'>我要去登录使用replace</button>
+						<button @click='back'>返回上一页</button>
+					</div>
+					<router-view></router-view>
+				</div>
+			`,
+			data(){
+				return {
+
+				}
+			},
+			methods:{
+				//push和replace同样效果，但是replace是不会在history插入记录，所以不能使用返回功能
+				goregister(){
+					this.$router.push({path:'/register'})
+				},
+				gologin(){
+					this.$router.replace({path:'/login'})
+				},
+				back(){
+					this.$router.go(-1)
+				}
+			}
+		})
+	</script>
+</body>
+</html>

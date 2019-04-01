@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charse="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<div id="app"></div>
+	<script type="text/javascript" src="vue.js"></script>
+
+	<script type="text/javascript">
+		Vue.prototype.$bus = new Vue()
+		var myHeader={
+			template:`
+				<div>我是头部 {{ headerMsg }}</div>
+			`,
+			created(){
+				// var self = this
+				// self.$bus.$on('sending',function(val){
+				// 	self.headerMsg = val
+				// })
+				this.$bus.$on('sending',val=>{
+					this.headerMsg = val
+				})
+			},
+			data(){
+				return{
+					headerMsg:'我是头部的信息'
+				}
+			}
+		}
+		var myBody={
+			template:`
+				<div>我是身体</div>
+			`
+		}
+
+		var myFooder={
+			template:`
+				<div>我是尾部<button @click='sendhead'>我要发信息给头部</button></div>
+			`,
+			methods:{
+				sendhead(){
+					this.$bus.$emit('sending','我是底部的数据')
+				}
+			}
+		}
+
+
+		new Vue({
+			el:'#app',
+			template:`
+				<div>
+					<my-header></my-header>
+					<my-body></my-body>
+					<my-fooder></my-fooder>
+				</div>
+			`,
+			components:{
+				myHeader,
+				myBody,
+				myFooder
+			},
+			data(){
+				return {
+
+				}
+			}
+		})
+	</script>
+</body>
+</html>

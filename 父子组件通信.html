@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charse="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<div id="app"></div>
+	<script type="text/javascript" src="vue.js"></script>
+
+	<script type="text/javascript">
+		//子组件通过定义好 props 定义好直接使用
+		var Child={
+			template:`
+				<div>
+					我是子组件{{ sendtochild }}<br>
+					<button @click='sendtoparent'>我要传东西给父组件</button>
+				</div>
+			`,
+			props:['sendtochild'],
+			methods:{
+				sendtoparent(){
+					//自定义了一个事件名字叫做 baba,后面的全是参数
+					this.$emit('baba','这是儿子给你的')
+				}
+			}
+		}
+		//父组件通过属性 sendtochild 传递属性给子组件
+		var Parent={
+			template:`
+				<div>
+					我是父组件 {{ data }}
+					<child sendtochild='父亲给的' @baba='reserve'></child>
+				</div>
+			`,
+			components:{
+				Child
+			},
+			data(){
+				return {
+					data:''
+				}
+			},
+			methods:{
+				reserve(val){
+					this.data = val
+				}
+			}
+		}
+
+
+		new Vue({
+			el:'#app',
+			template:`
+				<div>
+					<parent></parent>
+				</div>
+			`,
+			data(){
+				return {
+
+				}
+			},
+			components:{
+				Parent
+			}
+		})
+	</script>
+</body>
+</html>

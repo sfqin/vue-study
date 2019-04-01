@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charse="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<div id="app"></div>
+	<script type="text/javascript" src="vue.js"></script>
+	<script type="text/javascript">
+		new Vue({
+			el:'#app',
+			template:`
+				<div>
+					单向数据绑定，页面值改变不能影响内存改变，但是内存的值能影响页面<br>
+					<input type='text' v-bind:value="name" :class="name"><br>
+					双向数据绑定，内存和页面的值相互绑定影响<br>
+					<input type='text' v-model='name'><br>
+
+					{{name}}
+					<button v-on:click="name='我改变了'">我原来的样子</button>
+				</div>
+			`,
+			data:function(){
+				return {
+					name:'haha'
+				}
+			}
+		})
+	</script>
+</body>
+</html>

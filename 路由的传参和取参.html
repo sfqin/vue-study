@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charse="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<div id="app"></div>
+	<script type="text/javascript" src="vue.js"></script>
+	<!-- 1.引入路由插件 -->
+	<script type="text/javascript" src="vue-router.js"></script>
+	<script type="text/javascript">
+		var Login={
+			template:`
+				<div>
+					我是登录页面
+					<span>这是我获取到的参数为：{{ msg }}</span>
+				</div>
+			`,
+			data(){
+				return{
+					msg:''
+				}
+			},
+			created(){
+				this.msg = this.$route.query.id
+			}
+		}
+		var Restiger={
+			template:`
+				<div>
+					我是注册页面
+					 
+					<!-- <span>这是-我获取到的参数：{{ para }}</span> -->
+					
+					<span>这是-我获取到的参数：{{ foo }}</span>
+				</div>
+			`,
+			// data(){
+			// 	return{
+			// 		para:''
+			// 	}
+			// },
+			// created(){
+			// 	this.para = this.$route.params.foo
+			// },
+			props:['foo']
+		}
+		// 2. 安装路由插件
+		Vue.use(VueRouter);
+		// 3. 创建路由对象
+		var router = new VueRouter({
+			// 4. 配置路由规则
+			routes:[
+				{path:'/login',name:'login',component:Login},
+				// {path:'/restiger/:foo',name:'restiger',component:Restiger},
+				{path:'/restiger/:foo',name:'restiger',props:true,component:Restiger}
+			]
+		})
+		new Vue({
+			el:'#app',
+			router,
+			components:{
+				Login,
+				Restiger
+			},
+			template:`
+				<div>
+					<router-link :to="{name:'login',query:{id:'123'}}">去登陆</router-link>
+					<router-link :to="{name:'restiger',params:{foo:'bar'}}">去注册</router-link>
+					<button @click='jslink'>js跳转去登陆</button>
+					<router-view :key="$route.fullPath"></router-view>
+				</div>
+			`,
+			data(){
+				return {
+
+				}
+			},
+			methods:{
+				jslink(){
+					this.$router.push({name:'login',query:{id:'456'}})
+				}
+			}
+		})
+	</script>
+</body>
+</html>

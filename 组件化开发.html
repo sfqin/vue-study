@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charse="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<div id="app"></div>
+	<script type="text/javascript" src="vue.js"></script>
+
+	<script type="text/javascript">
+		//上面两个是语法糖创建方式
+		var MyHeader={
+			template:`
+				<div>我是头部</div>
+			`
+		}
+		var MyBody={
+			template:`
+				<div>我是身体</div>
+			`
+		}
+		var MyFooder=Vue.extend({
+			template:`
+				<div>我是尾部</div>
+			`
+		})
+		//申请的全局组件,不需要再下面申明
+		Vue.component('MyTail',{
+				template:`
+				<div>我是拖尾巴</div>
+			`
+		})
+		new Vue({
+			el:'#app',
+			template:`
+				<div>
+					<my-header></my-header>
+					<my-body></my-body>
+					<my-fooder></my-fooder>
+					<my-tail></my-tail>
+				</div>
+			`,
+			components:{
+				MyHeader,
+				MyBody,
+				MyFooder
+			},
+			data(){
+				return {
+
+				}
+			}
+		})
+	</script>
+</body>
+</html>
